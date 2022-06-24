@@ -1,3 +1,8 @@
+![size](https://img.shields.io/github/languages/code-size/RodrigoFNascimento/AppSettingsReader)
+![files](https://img.shields.io/github/directory-file-count/RodrigoFNascimento/AppSettingsReader)
+![language](https://img.shields.io/github/languages/top/RodrigoFNascimento/AppSettingsReader)
+![license](https://img.shields.io/github/license/RodrigoFNascimento/AppSettingsReader)
+
 # AppSettingsReader
 A library for reading the configuration in AppSettings
 
