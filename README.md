@@ -1,6 +1,7 @@
 ![size](https://img.shields.io/github/languages/code-size/RodrigoFNascimento/AppSettingsReader)
 ![files](https://img.shields.io/github/directory-file-count/RodrigoFNascimento/AppSettingsReader)
 ![language](https://img.shields.io/github/languages/top/RodrigoFNascimento/AppSettingsReader)
+![framework](https://img.shields.io/badge/dynamic/xml?color=blue&label=.net%20version&query=%2F%2FTargetFramework%5B1%5D&url=https%3A%2F%2Fraw.githubusercontent.com%2FRodrigoFNascimento%2FAppSettingsReader%2Fmain%2FAppSetttingsReader%2FAppSetttingsReader.csproj)
 ![workflow](https://img.shields.io/github/workflow/status/RodrigoFNascimento/AppSettingsReader/.NET)
 ![license](https://img.shields.io/github/license/RodrigoFNascimento/AppSettingsReader)
 
