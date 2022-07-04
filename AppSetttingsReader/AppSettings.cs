@@ -15,14 +15,14 @@ namespace AppSetttingsReader
         /// <param name="key">Identificador da configuração.</param>
         /// <returns>Valor da configuração.</returns>
         /// <exception cref="ConfigurationErrorsException">
-        /// Lançada quando a configuração está em formato inválido ou não existe.
+        /// Lançada quando a configuração não existe.
         /// </exception>
         public static string GetValue(string key)
         {
             string value = ConfigurationManager.AppSettings[key];
 
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ConfigurationErrorsException($"Configuração inválida ou não existente: {key}");
+            if (value is null)
+                throw new ConfigurationErrorsException($"Configuração não existente: {key}");
 
             return value;
         }
@@ -34,7 +34,7 @@ namespace AppSetttingsReader
         /// <param name="key">Identificador da configuração.</param>
         /// <returns>Valor da configuração convertido.</returns>
         /// <exception cref="ConfigurationErrorsException">
-        /// Lançada quando a configuração está em formato inválido ou não existe.
+        /// Lançada quando a configuração não existe.
         /// </exception>
         public static TValue GetValue<TValue>(string key)
         {
