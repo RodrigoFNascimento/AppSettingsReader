@@ -5,56 +5,86 @@ namespace ConfigReader.Test.Unit;
 public class EnvironmentTests
 {
     [Fact]
-    public void GetValue_ReturnsCorrectValue()
+    public void GetValue_ReturnsCorrectValue_GivenExistentKey()
     {
         // Arrange
-        var variable = "testVariable";
+        var key = "testVariable";
         var expectedValue = "testValue";
-        System.Environment.SetEnvironmentVariable(variable, expectedValue);
+        System.Environment.SetEnvironmentVariable(key, expectedValue);
 
         // Act
-        var actualValue = Environment.GetValue<string>(variable);
+        var actualValue = Environment.GetValue<string>(key);
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
     }
 
     [Fact]
-    public void GetValue_ThrowsExceptionForNonExistentVariable()
+    public void GetValue_ThrowsArgumentException_WhenValueCannotBeConverted()
     {
         // Arrange
-        var variable = "nonExistentVariable";
+        var key = "testKey";
+        var value = "abc";
+        System.Environment.SetEnvironmentVariable(key, value);
+
+        // Act
+        void act() => Environment.GetValue<int>(key);
+
+        // Assert
+        var exception = Assert.Throws<ArgumentException>(act);
+    }
+
+    [Fact]
+    public void GetValue_ThrowsConfigurationErrorsException_GivenNonExistentKey()
+    {
+        // Arrange
+        var key = "nonExistentKey";
 
         // Act & Assert
-        var exception = Assert.Throws<ConfigurationErrorsException>(() => Environment.GetValue<string>(variable));
-        Assert.Equal($"Configuração não existente: {variable}", exception.Message);
+        var exception = Assert.Throws<ConfigurationErrorsException>(() => Environment.GetValue<string>(key));
+        Assert.Equal($"Configuration not found: {key}", exception.Message);
+    }
+
+    [Fact]
+    public void GetValue_ReturnsCorrectValueWithTypeConversion_GivenExistentKey()
+    {
+        // Arrange
+        var key = "testKey";
+        var expectedValue = 123;
+        System.Environment.SetEnvironmentVariable(key, expectedValue.ToString());
+
+        // Act
+        var actualValue = Environment.GetValue<int>(key);
+
+        // Assert
+        Assert.Equal(expectedValue, actualValue);
     }
 
     [Fact]
     public void GetValueOrDefault_ReturnsCorrectValue()
     {
         // Arrange
-        var variable = "testVariable";
+        var key = "testKey";
         var expectedValue = "testValue";
-        System.Environment.SetEnvironmentVariable(variable, expectedValue);
+        System.Environment.SetEnvironmentVariable(key, expectedValue);
         var defaultValue = "defaultValue";
 
         // Act
-        var actualValue = Environment.GetValueOrDefault<string>(variable, defaultValue);
+        var actualValue = Environment.GetValueOrDefault(key, defaultValue);
 
         // Assert
         Assert.Equal(expectedValue, actualValue);
     }
 
     [Fact]
-    public void GetValueOrDefault_ReturnsDefaultValueForNonExistentVariable()
+    public void GetValueOrDefault_ReturnsDefaultValue_GivenNonExistentVariable()
     {
         // Arrange
-        var variable = "nonExistentVariable";
+        var key = "nonExistentKey";
         var defaultValue = "defaultValue";
 
         // Act
-        var actualValue = Environment.GetValueOrDefault<string>(variable, defaultValue);
+        var actualValue = Environment.GetValueOrDefault(key, defaultValue);
 
         // Assert
         Assert.Equal(defaultValue, actualValue);
@@ -64,12 +94,12 @@ public class EnvironmentTests
     public void TryGetValue_ReturnsTrueAndCorrectValue()
     {
         // Arrange
-        var variable = "testVariable";
+        var key = "testKey";
         var expectedValue = "testValue";
-        System.Environment.SetEnvironmentVariable(variable, expectedValue);
+        System.Environment.SetEnvironmentVariable(key, expectedValue);
 
         // Act
-        var result = Environment.TryGetValue<string>(variable, out var actualValue);
+        var result = Environment.TryGetValue<string>(key, out var actualValue);
 
         // Assert
         Assert.True(result);
@@ -77,16 +107,16 @@ public class EnvironmentTests
     }
 
     [Fact]
-    public void TryGetValue_ReturnsFalseAndDefaultValueForNonExistentVariable()
+    public void TryGetValue_ReturnsFalseAndDefaultValue_GivenNonExistentVariable()
     {
         // Arrange
-        var variable = "nonExistentVariable";
+        var key = "nonExistentKey";
 
         // Act
-        var result = Environment.TryGetValue<string>(variable, out var actualValue);
+        var result = Environment.TryGetValue<string>(key, out var actualValue);
 
         // Assert
         Assert.False(result);
-        Assert.Equal(default(string), actualValue);
+        Assert.Equal(default, actualValue);
     }
 }

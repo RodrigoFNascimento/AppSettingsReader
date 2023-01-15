@@ -20,7 +20,22 @@ public class AppSettingsTests
     }
 
     [Fact]
-    public void GetValue_ThrowsException_GivenNonExistentKey()
+    public void GetValue_ThrowsArgumentException_WhenValueCannotBeConverted()
+    {
+        // Arrange
+        var key = "testKey";
+        var value = "abc";
+        ConfigurationManager.AppSettings[key] = value.ToString();
+
+        // Act
+        void act() => AppSettings.GetValue<int>(key);
+
+        // Assert
+        var exception = Assert.Throws<ArgumentException>(act);
+    }
+
+    [Fact]
+    public void GetValue_ThrowsConfigurationErrorsException_GivenNonExistentKey()
     {
         // Arrange
         var key = "nonExistentKey";
