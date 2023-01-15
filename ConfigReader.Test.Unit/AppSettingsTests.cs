@@ -1,5 +1,4 @@
-﻿using AppSetttingsReader;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace ConfigReader.Test.Unit;
 public class AppSettingsTests

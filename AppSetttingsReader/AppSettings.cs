@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Configuration;
 
-namespace AppSetttingsReader
+namespace ConfigReader
 {
     public static class AppSettings
     {
