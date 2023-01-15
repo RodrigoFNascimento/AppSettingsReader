@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppSetttingsReader\ConfigReader.csproj" />
+    <ProjectReference Include="..\ConfigReader\ConfigReader.csproj" />
   </ItemGroup>
 
 </Project>
