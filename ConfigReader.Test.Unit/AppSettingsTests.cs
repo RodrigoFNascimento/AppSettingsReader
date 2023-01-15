@@ -27,7 +27,7 @@ public class AppSettingsTests
 
         // Act & Assert
         var exception = Assert.Throws<ConfigurationErrorsException>(() => AppSettings.GetValue(key));
-        Assert.Equal($"Configuração não existente: {key}", exception.Message);
+        Assert.Equal($"Configuration not found: {key}", exception.Message);
     }
 
     [Fact]

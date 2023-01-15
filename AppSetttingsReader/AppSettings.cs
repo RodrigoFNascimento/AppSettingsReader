@@ -4,37 +4,37 @@ using System.Configuration;
 
 namespace AppSetttingsReader
 {
-    /// <summary>
-    /// Ferramentas usadas para obter configurações do AppSettings.
-    /// </summary>
     public static class AppSettings
     {
         /// <summary>
-        /// Obtém o valor de uma configuração do AppSettings.
+        /// Gets a value from AppSettings.
         /// </summary>
-        /// <param name="key">Identificador da configuração.</param>
-        /// <returns>Valor da configuração.</returns>
+        /// <param name="key">Configuration key.</param>
+        /// <returns>Configuration value.</returns>
         /// <exception cref="ConfigurationErrorsException">
-        /// Lançada quando a configuração não existe.
+        /// Thrown when no configuration was found with the given key.
         /// </exception>
         public static string GetValue(string key)
         {
             string value = ConfigurationManager.AppSettings[key];
 
             if (value is null)
-                throw new ConfigurationErrorsException($"Configuração não existente: {key}");
+                throw new ConfigurationErrorsException($"Configuration not found: {key}");
 
             return value;
         }
 
         /// <summary>
-        /// Obtém o valor de uma configuração do AppSettings.
+        /// Gets a value from AppSettings.
         /// </summary>
-        /// <typeparam name="TValue">Tipo para o qual o valor deve ser convertido.</typeparam>
-        /// <param name="key">Identificador da configuração.</param>
-        /// <returns>Valor da configuração convertido.</returns>
+        /// <typeparam name="TValue">Output type.</typeparam>
+        /// <param name="key">Configuration key.</param>
+        /// <returns>Configuration value of type <typeparamref name="TValue"/>.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when the value cannot be converted to <typeparamref name="TValue"/>.
+        /// </exception>
         /// <exception cref="ConfigurationErrorsException">
-        /// Lançada quando a configuração não existe.
+        /// Thrown when no configuration was found with the given key.
         /// </exception>
         public static TValue GetValue<TValue>(string key)
         {
@@ -44,12 +44,15 @@ namespace AppSetttingsReader
         }
 
         /// <summary>
-        /// Obtém o valor de uma configuração do AppSettings ou valor default.
+        /// Gets a value from AppSettings.
         /// </summary>
-        /// <typeparam name="TValue">Tipo para o qual o valor deve ser convertido.</typeparam>
-        /// <param name="key">Identificador da configuração.</param>
-        /// <param name="defaultValue">Valor retornado caso não seja possível obter valor do AppSettings.</param>
-        /// <returns>Valor da configuração convertido.</returns>
+        /// <typeparam name="TValue">Output type.</typeparam>
+        /// <param name="key">Configuration key.</param>
+        /// <param name="defaultValue">
+        /// Return value when <paramref name="key"/> is not found
+        /// or cannot be converted to <typeparamref name="TValue"/>.
+        /// </param>
+        /// <returns>Configuration value of type <typeparamref name="TValue"/>.</returns>
         public static TValue GetValueOrDefault<TValue>(string key, TValue defaultValue)
         {
             try
@@ -63,17 +66,16 @@ namespace AppSetttingsReader
         }
 
         /// <summary>
-        /// Obtém o valor de uma configuração do AppSettings.
+        /// Gets a value from AppSettings.
         /// </summary>
         /// <remarks>
-        /// Se o valor não for convertido com sucesso, 
-        /// o valor retornado de <paramref name="value"></paramref> 
-        /// será o default do tipo <typeparamref name="TValue"></typeparamref>.
+        /// If the value cannot be successfully converted,
+        /// the output value will be the default of type <typeparamref name="TValue"/>.
         /// </remarks>
-        /// <typeparam name="TValue">Tipo para o qual o valor deve ser convertido.</typeparam>
-        /// <param name="key">Identificador da configuração.</param>
-        /// <param name="value">Valor convertido da configuração.</param>
-        /// <returns>true se <paramref name="key"></paramref> for convertido com sucesso; do contrário, false.</returns>
+        /// <typeparam name="TValue">Output type.</typeparam>
+        /// <param name="key">Configuration key.</param>
+        /// <param name="value">Configuration value of type <typeparamref name="TValue"/>.</param>
+        /// <returns>true if <paramref name="value"/> was converted successfully; otherwise, false.</returns>
         public static bool TryGetValue<TValue>(string key, out TValue value)
         {
             try
