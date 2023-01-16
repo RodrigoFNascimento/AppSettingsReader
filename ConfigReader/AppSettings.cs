@@ -59,7 +59,7 @@ namespace ConfigReader
             {
                 return GetValue<TValue>(key);
             }
-            catch (Exception)
+            catch (Exception ex) when (ex is ArgumentException || ex is ConfigurationErrorsException)
             {
                 return defaultValue;
             }
@@ -83,7 +83,7 @@ namespace ConfigReader
                 value = GetValue<TValue>(key);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex) when (ex is ArgumentException || ex is ConfigurationErrorsException)
             {
                 value = default;
                 return false;
